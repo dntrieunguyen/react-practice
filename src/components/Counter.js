@@ -1,10 +1,21 @@
-import { useSelector, useDispatch } from 'react-redux';
-
+import { useState } from 'react';
 import classes from './Counter.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { increaseAction } from '../redux/acitons';
 
 const Counter = () => {
-   const counter = 0;
+   const [counter, setCounter] = useState(0);
+   const dispatch = useDispatch();
+   const count = useSelector(state => state.value);
+   console.log(count);
 
+   const handleIncrement = () => {
+      dispatch(
+         increaseAction({
+            value: 0,
+         }),
+      );
+   };
    const toggleCounterHandler = () => {};
 
    return (

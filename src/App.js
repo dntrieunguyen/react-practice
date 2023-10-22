@@ -1,10 +1,10 @@
 import './App.scss';
-import Lab15 from './pages/Lab15';
+import Counter from './components/Counter';
 
 function App() {
    return (
       <>
-         <Lab15></Lab15>
+         <Counter></Counter>
       </>
    );
 }
