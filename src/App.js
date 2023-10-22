@@ -1,9 +1,10 @@
 import './App.scss';
+import Lab15 from './pages/Lab15';
 
 function App() {
    return (
       <>
-         <h2>test lab 15</h2>
+         <Lab15></Lab15>
       </>
    );
 }
