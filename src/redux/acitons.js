@@ -4,3 +4,9 @@ export const increaseAction = payload => {
       payload,
    };
 };
+export const decreaseAction = payload => {
+   return {
+      type: 'DECREASE',
+      payload,
+   };
+};
