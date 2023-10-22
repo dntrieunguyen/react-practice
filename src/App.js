@@ -1,9 +1,10 @@
 import './App.scss';
+import Lab1001 from './components/Lab1001';
 
 function App() {
    return (
       <>
-         <h2>Hello guys</h2>
+         <Lab1001></Lab1001>
       </>
    );
 }
