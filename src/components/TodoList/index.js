@@ -3,14 +3,16 @@ import Todo from '../Todo';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTodo } from '../../redux/actions';
 import { v4 as uuidv4 } from 'uuid';
-import { useState } from 'react';
-import { todoListSelector } from '../../redux/selector';
+import { useRef, useState } from 'react';
+import { todoReaminingSelector } from '../../redux/selector';
 
 export default function TodoList() {
    const [todoName, setTodoName] = useState('');
    const [priority, setPriority] = useState('Medium');
-   const todoList = useSelector(todoListSelector);
-   console.log(todoList);
+   const todoList = useSelector(todoReaminingSelector);
+
+   const todoNameRef = useRef();
+
    //dispatch
    const dispatch = useDispatch();
 
@@ -28,9 +30,12 @@ export default function TodoList() {
             id: uuidv4(),
             name: todoName,
             priority: priority,
-            complete: false,
+            completed: false,
          }),
       );
+      setTodoName('');
+      setPriority('Medium');
+      todoNameRef.current.focus();
    };
 
    return (
@@ -43,12 +48,22 @@ export default function TodoList() {
             <Todo name="Learn Redux" priority="Medium" />
             <Todo name="Learn JavaScript" priority="Low" /> */}
             {todoList.map(todo => (
-               <Todo key={todo.id} name={todo.name} priority={todo.priority} />
+               <Todo
+                  key={todo.id}
+                  id={todo.id}
+                  name={todo.name}
+                  priority={todo.priority}
+                  completed={todo.completed}
+               />
             ))}
          </Col>
          <Col span={24}>
             <Input.Group style={{ display: 'flex' }} compact>
-               <Input value={todoName} onChange={handleInputChange} />
+               <Input
+                  ref={todoNameRef}
+                  value={todoName}
+                  onChange={handleInputChange}
+               />
                <Select
                   value={priority}
                   onChange={handlePriorityChange}
