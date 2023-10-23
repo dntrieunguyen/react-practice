@@ -1,13 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-// export const todoListSelector = state => {
-//    const searchInput = filterListSelector(state);
-
-// //    const todoRemaining = state.todoList.filter(todo =>
-// //       todo.name.includes(searchInput),
-// //    );
-// //    return todoRemaining;
-// };
 export const todoListSelector = state => state.todoList;
 
 export const filterListSelector = state => state.filters.search;
