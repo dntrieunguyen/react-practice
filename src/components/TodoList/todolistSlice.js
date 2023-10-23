@@ -1,29 +1,25 @@
-const initState = [
-   { id: 1, name: 'Learn JS', completed: false, priority: 'Medium' },
-   { id: 2, name: 'Learn React', completed: false, priority: 'High' },
-   { id: 3, name: 'Learn Redux', completed: true, priority: 'Low' },
-];
+import { createSlice } from '@reduxjs/toolkit';
 
-const todoListReducer = (state = initState, action) => {
-   /*
-     type: 'todoList/addTodo'
-     payload: { id: 3, name: 'Learn Redux', complete: true, prority: 'Low' }
-     */
+export const todoListSlice = createSlice({
+   name: 'todoList',
 
-   switch (action.type) {
-      case 'todoList/addTodo':
-         return [...state, action.payload];
+   initialState: [
+      { id: 1, name: 'Learn JS', completed: false, priority: 'Medium' },
+      { id: 2, name: 'Learn React', completed: false, priority: 'High' },
+      { id: 3, name: 'Learn Redux', completed: true, priority: 'Low' },
+      //
+   ],
 
-      case 'todoList/completedTodoChange':
-         return state.map(todo =>
-            todo.id === action.payload
-               ? { ...todo, completed: !todo.completed }
-               : todo,
-         );
+   reducers: {
+      addTodo: (state, action) => {
+         state.push(action.payload);
+      },
 
-      default:
-         return state;
-   }
-};
-
-export default todoListReducer;
+      completedTodoChange: (state, action) => {
+         const updateTodoList = state.find(todo => (todo.id = action.payload));
+         if (updateTodoList) {
+            updateTodoList.completed = !updateTodoList.completed;
+         }
+      },
+   },
+});
