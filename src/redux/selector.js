@@ -33,11 +33,8 @@ export const todoReaminingSelector = createSelector(
 
          return (
             todo.name.includes(searchInput) &&
-            (status === 'Completed'
-               ? priority.length
-                  ? todo.completed && priority.includes(todo.priority)
-                  : true
-               : !todo.completed)
+            (status === 'Completed' ? todo.completed : !todo.completed) &&
+            (priority.length ? priority.includes(todo.priority) : true)
          );
       });
    },
