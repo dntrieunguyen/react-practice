@@ -7,12 +7,14 @@ export default function Main() {
       id: '',
       title: '',
       amount: 0,
-      date: new Date(),
+      date: new Date().toISOString().substr(0, 10),
    });
-   const [filterYear, setFilterYear] = useState();
+
+   const [filterYear, setFilterYear] = useState('');
    const [year, setYear] = useState([2020, 2021]);
 
-   const [updateExpenses, setUpdateExpenses] = useState(expenses);
+   const [updateExpenses, setUpdateExpenses] = useState(expenses); // Arr
+   const [filterYearArr, setFilterYearArr] = useState([]); //Filter Year Arr
 
    const handleChangeTitle = e => {
       const value = e.target.value;
@@ -38,20 +40,59 @@ export default function Main() {
 
    const handleAddNewExpense = e => {
       e.preventDefault();
-      const newExpense = { ...expense, id: `e${updateExpenses.length + 1}` };
-      //   const newYear = newExpense.date;
-      //   console.log(newYear);
-      //   const checkYearExisting = updateExpenses.findIndex(
-      //      item => item.date.getFullYear() === newYear,
-      //   );
+      const newExpense = { ...expense, date: new Date(expense.date) };
+      const newUpdateExpenses = {
+         ...newExpense,
+         id: `e${updateExpenses.length + 1}`,
+      };
+      const newYear = newExpense.date.getFullYear();
 
-      //   if (checkYearExisting === -1) {
-      //      setYear([...year, newYear]);
-      //   }
+      const checkYearExisting = updateExpenses.findIndex(
+         item => item.date.getFullYear() === newYear,
+      );
 
-      setUpdateExpenses([...updateExpenses, newExpense]);
+      if (checkYearExisting === -1) {
+         setYear([...year, newYear]);
+      }
 
-      setExpense({ id: '', title: '', amount: 0, date: new Date() });
+      setUpdateExpenses([...updateExpenses, newUpdateExpenses]);
+
+      setExpense({
+         id: '',
+         title: '',
+         amount: 0,
+         date: new Date().toISOString().substr(0, 10),
+      });
+      setFilterYear('Select All');
+   };
+
+   const handleFilterYearChange = e => {
+      const value = e.target.value;
+      setFilterYear(value);
+      let newUpdateExpensesArr = [];
+
+      newUpdateExpensesArr = updateExpenses.filter(
+         item => item.date.getFullYear() == value,
+      );
+
+      setFilterYearArr(newUpdateExpensesArr);
+   };
+
+   const handleChangeTitleBtn = e => {
+      if (filterYearArr.length > 0) {
+         const newsArr = filterYearArr?.map(item =>
+            item.id === e.id ? { ...item, title: 'Title Changed' } : item,
+         );
+
+         setFilterYearArr(newsArr);
+      }
+   };
+   const handleChangeTitleExpenseArrBtn = e => {
+      const newsArr = updateExpenses.map(item =>
+         item.id === e.id ? { ...item, title: 'Title Changed' } : item,
+      );
+      setUpdateExpenses(newsArr);
+      console.log(e);
    };
 
    return (
@@ -68,35 +109,74 @@ export default function Main() {
                <div className="boxContent">
                   <div className="expenseFilter">
                      <h2 className="filterTitle">Filter by Year</h2>
-                     <select name="selectYear" className="sltYBtn">
+                     <select
+                        value={filterYear}
+                        onChange={handleFilterYearChange}
+                        name="selectYear"
+                        className="sltYBtn"
+                     >
+                        <option value="Select All">Select All</option>
                         {year.map((year, index) => (
-                           <option key={index} value="">
+                           <option key={index} value={year}>
                               {year}
                            </option>
                         ))}
                      </select>
                   </div>
 
-                  {updateExpenses.map(item => (
-                     <div className="expenseItem" key={item.id}>
-                        <div className="expenseItemDate">
-                           <p className="expenseItemDateM">
-                              {item.date.getMonth() + 1}
-                           </p>
-                           <p className="expenseItemDateY">
-                              {item.date.getFullYear()}
-                           </p>
-                           <p className="expenseItemDateD">
-                              {item.date.getDate()}
-                           </p>
-                        </div>
-                        <div className="expenseItemTitle">{item.title}</div>
-                        <div className="expenseItemPrice">{`$${item.amount}`}</div>
-                        <button className="btnUpdate">
-                           Change <br /> Title
-                        </button>
-                     </div>
-                  ))}
+                  {filterYearArr.length > 0
+                     ? filterYearArr.map(item => (
+                          <div className="expenseItem" key={item.id}>
+                             <div className="expenseItemDate">
+                                <p className="expenseItemDateM">
+                                   {item.date.getMonth() + 1}
+                                </p>
+                                <p className="expenseItemDateY">
+                                   {item.date.getFullYear()}
+                                </p>
+                                <p className="expenseItemDateD">
+                                   {item.date.getDate()}
+                                </p>
+                             </div>
+                             <div className="expenseItemTitle">
+                                {item.title}
+                             </div>
+                             <div className="expenseItemPrice">{`$${item.amount}`}</div>
+                             <button
+                                onClick={() => handleChangeTitleBtn(item)}
+                                className="btnUpdate"
+                             >
+                                Change <br /> Title
+                             </button>
+                          </div>
+                       ))
+                     : updateExpenses.map(item => (
+                          <div className="expenseItem" key={item.id}>
+                             <div className="expenseItemDate">
+                                <p className="expenseItemDateM">
+                                   {item.date.getMonth() + 1}
+                                </p>
+                                <p className="expenseItemDateY">
+                                   {item.date.getFullYear()}
+                                </p>
+                                <p className="expenseItemDateD">
+                                   {item.date.getDate()}
+                                </p>
+                             </div>
+                             <div className="expenseItemTitle">
+                                {item.title}
+                             </div>
+                             <div className="expenseItemPrice">{`$${item.amount}`}</div>
+                             <button
+                                onClick={() =>
+                                   handleChangeTitleExpenseArrBtn(item)
+                                }
+                                className="btnUpdate"
+                             >
+                                Change <br /> Title
+                             </button>
+                          </div>
+                       ))}
                </div>
             </div>
          </div>
