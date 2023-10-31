@@ -1,19 +1,17 @@
-import { useState } from 'react';
 import classes from './Counter.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { decreaseAction, increaseAction } from '../redux/acitons';
 
 const Counter = () => {
-   const [counter, setCounter] = useState(0);
+   const counter = useSelector(state => state.count);
+
    const dispatch = useDispatch();
 
    const handleIncrement = () => {
-      setCounter(counter + 1);
       dispatch(increaseAction(counter));
    };
 
    const handleDecrement = () => {
-      setCounter(counter - 1);
       dispatch(decreaseAction(counter));
    };
 
