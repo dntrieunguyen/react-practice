@@ -92,7 +92,6 @@ export default function Main() {
          item.id === e.id ? { ...item, title: 'Title Changed' } : item,
       );
       setUpdateExpenses(newsArr);
-      console.log(e);
    };
 
    return (
