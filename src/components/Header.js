@@ -7,25 +7,26 @@ const Header = () => {
    const dispatch = useDispatch();
 
    const handleClickLogOutBtn = e => {
+      alert('Log Out Success');
       dispatch(loginSlice.actions.LOGOUT());
    };
    return (
       <header className={classes.header}>
          <h1>Redux Auth</h1>
          <nav>
-            {isLogin && (
-               <ul>
-                  <li>
-                     <a href="/">My Products</a>
-                  </li>
-                  <li>
-                     <a href="/">My Sales</a>
-                  </li>
+            <ul>
+               <li>
+                  <a href="/">My Products</a>
+               </li>
+               <li>
+                  <a href="/">My Sales</a>
+               </li>
+               {isLogin && (
                   <li>
                      <button onClick={handleClickLogOutBtn}>Logout</button>
                   </li>
-               </ul>
-            )}
+               )}
+            </ul>
          </nav>
       </header>
    );
