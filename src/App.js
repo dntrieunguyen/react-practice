@@ -1,9 +1,10 @@
 import './App.scss';
+import Main from './components/Main';
 
 function App() {
    return (
       <>
-         <h2>Hello guy</h2>
+         <Main></Main>
       </>
    );
 }
