@@ -1,10 +1,10 @@
-import './App.scss';
+import BasicForm from './components/BasicForm';
 
 function App() {
    return (
-      <>
-         <h2>Hello guy</h2>
-      </>
+      <div className="app">
+         <BasicForm />
+      </div>
    );
 }
 
