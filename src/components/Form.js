@@ -20,7 +20,6 @@ export default function Form() {
          releaseDate,
          title,
       };
-      //   console.log(moviePost);
 
       try {
          const res = await fetch(
