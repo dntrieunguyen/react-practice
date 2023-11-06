@@ -24,6 +24,7 @@ function App() {
 
       if (fetchDataFlag) {
          fetchData();
+         setFetchDataFlag(false);
       }
    }, [fetchDataFlag]);
 
