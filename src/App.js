@@ -8,10 +8,6 @@ export default class App extends Component {
          name: '',
          password: '',
       };
-      this.user = {
-         name: '',
-         password: '',
-      };
    }
 
    onChangeInputText = e => {
